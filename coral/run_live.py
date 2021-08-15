@@ -10,10 +10,10 @@ device setup instructions, see coral.ai/docs/setup.
 Example usage:
 ```
 without tracking:
-python3 process_video.py --tracking 0  --model models/ssdlite_mobiledet_coco_qat_postprocess_edgetpu.tflite --labels models/coco_labels.txt --input test_data/input_data/video56_320x320.m4v --output test_data/output_data/video56_320x320_processed.m4v
+python3 run_live.py --tracking 0  --model models/ssdlite_mobiledet_coco_qat_postprocess_edgetpu.tflite --labels models/coco_labels.txt --output test_data/output_data/camera_processed.m4v
 
 with tracking:
-python3 process_video.py --tracking 1  --model models/ssdlite_mobiledet_coco_qat_postprocess_edgetpu.tflite --labels models/coco_labels.txt --input test_data/input_data/video56_320x320.m4v --output test_data/output_data/video56_320x320_processed_tracking.m4v
+python3 run_live.py --tracking 1  --model models/ssdlite_mobiledet_coco_qat_postprocess_edgetpu.tflite --labels models/coco_labels.txt --output test_data/output_data/camera_processed_tracking.m4v
 
 ```
 """
@@ -105,12 +105,10 @@ def main():
       formatter_class=argparse.ArgumentDefaultsHelpFormatter)
   parser.add_argument('-m', '--model', required=True,
                       help='File path of .tflite file')
-  parser.add_argument('-i', '--input', required=True,
-                      help='File path of image to process')
   parser.add_argument('-l', '--labels', help='File path of labels file')
   parser.add_argument('-t', '--threshold', type=float, default=0.55,
                       help='Score threshold for detected objects')
-  parser.add_argument('-o', '--output', required=True,
+  parser.add_argument('-o', '--output',
                       help='File path for the result image with annotations')
   parser.add_argument("--tracking", help="0=no tracking, 1=tracking.", type=int, default=1)
   parser.add_argument("--max_age", 
@@ -133,7 +131,6 @@ def main():
   interpreter = make_interpreter(args.model)
   interpreter.allocate_tensors()
 
-  input_filename = args.input
   output_filename = args.output
   begin_frame_number = 0
   end_frame_number = -1
@@ -141,7 +138,7 @@ def main():
 
   # Create a VideoCapture object and read from input file
   # If the input is the camera, pass 0 instead of the video file name
-  capture = cv2.VideoCapture(input_filename)
+  capture = cv2.VideoCapture(0)
 
   # Check if video or camera opened successfully
   if (capture.isOpened()== False): 
@@ -154,7 +151,7 @@ def main():
   capture.set(cv2.CAP_PROP_POS_FRAMES, begin_frame_number)
   frame_width = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
   frame_height = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        
+
   # If output filename is provided, create video writer object
   if (output_filename != ""):
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -170,7 +167,7 @@ def main():
   time_start = time.time()
   frame_count = 0
 
-  while (frame_count < total_frames):
+  while capture.isOpened():
 
     # Capture frame-by-frame
     current_frame_number = int(capture.get(cv2.CAP_PROP_POS_FRAMES))
@@ -247,8 +244,9 @@ def main():
             if (len(all_tracks[track_id]) < args.approach_tracking_depth):
               approaching_vehicle = False;
             else:
-              last_N_widths  = np.array([(bbox[1][0] - bbox[0][0]) for bbox in all_tracks[track_id][-args.approach_tracking_depth:]])
-              last_N_heights = np.array([(bbox[1][1] - bbox[0][1]) for bbox in all_tracks[track_id][-args.approach_tracking_depth:]])
+              all_tracks[track_id] = all_tracks[track_id][-args.approach_tracking_depth:]
+              last_N_widths  = np.array([(bbox[1][0] - bbox[0][0]) for bbox in all_tracks[track_id]])
+              last_N_heights = np.array([(bbox[1][1] - bbox[0][1]) for bbox in all_tracks[track_id]])
               average_height = np.mean(last_N_heights)
 
               # perform linear regression on last N widths and heights
@@ -291,7 +289,7 @@ def main():
           video_out.write(frame_out)
 
         cv2.imshow('frame', frame_out)
-        
+
     # Break the loop
     else: 
       break
