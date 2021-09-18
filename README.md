@@ -21,19 +21,20 @@ Detection examples. Red boxes indicate approaching vehicles, while green boxes s
 
 Directory structure:
 
-/
-CAR-BAC Final Report.docx.pdf - Detailed description of project, hardware, software, test results, lessons learned, next steps, and more.
-BicycleCamBOM.xlsx            - Bill of Material
-coral/
-  models/                     - TFlite models for Coral TPU
-  test_data/                  - Example test data
-  process_video.py            - Python script to process pre-recorded video from bicycle camera (for testing)
-  run_live.py                 - Python script to process live video from bicycle camera (the main application)
-  sort_tracker.py             - Implements SORT tracking algorithm
-  utils.py                    - Some utility functions invoked by the top-level scripts
-pi_scripts/
-  camera.py                   - Python scirpt to capture live video and record to file (for testing)
-  start_script_on_boot.txt    - Instructions to configure Raspberry Pi to run a Python script on bootup
-photos/                       - Photos of CAR-BAC
-videos/                       - Demo videos of CAR-BAC
+```bash
+├── CAR-BAC Final Report.docx.pdf - detailed description of project 
+├── BicycleCamBOM.xlsx            - bill of materials
+├── coral
+│   ├── models                    - TFLite models for Coral TPU
+│   ├── test_data                 - example test data
+│   ├── process_video.py          - script to process pre-recorded video
+│   ├── run_live.py               - script to process live video (main application)
+│   ├── sort_tracker.py           - implements SORT tracking algorithm
+│   └── utils.py                  - utility functions invoked by top-level scripts
+├── pi_scripts
+│   ├── camera.py                 - script to capture live video and record to file
+│   ├── start_script_on_boot.txt  - instructions to configure Pi to run script on bootup
+├── photos                        - photos of CAR-BAC
+├── videos                        - demo videos of CAR-BAC
+├── README.md                     - this README
 
