@@ -18,3 +18,23 @@ Detection examples. Red boxes indicate approaching vehicles, while green boxes s
 
 ![Detection examples](https://raw.githubusercontent.com/Bethesda-AI-Projects-Lab/bicycle_vision/main/photos/three_stills_with_detects.jpg)
 
+
+Directory structure:
+
+```bash
+├── CAR-BAC Final Report.docx.pdf - detailed description of project 
+├── BicycleCamBOM.xlsx            - bill of materials
+├── coral
+│   ├── models                    - TFLite models for Coral TPU
+│   ├── test_data                 - example test data
+│   ├── process_video.py          - script to process pre-recorded video
+│   ├── run_live.py               - script to process live video (main application)
+│   ├── sort_tracker.py           - implements SORT tracking algorithm
+│   └── utils.py                  - utility functions invoked by top-level scripts
+├── pi_scripts
+│   ├── camera.py                 - script to capture live video and record to file
+│   ├── start_script_on_boot.txt  - instructions to configure Pi to run script on bootup
+├── photos                        - photos of CAR-BAC
+├── videos                        - demo videos of CAR-BAC
+├── README.md                     - this README
+
