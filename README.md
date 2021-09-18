@@ -16,5 +16,5 @@ CAR-BAC fitted on bike:
 
 Detection examples. Red boxes indicate approaching vehicles, while green boxes signify vehicles that are not approaching.
 
-![Detection examples](https://user-images.githubusercontent.com/11370301/132380344-f09759d8-1d35-4645-9d0a-329aee967107.png)
+![Detection examples](https://raw.githubusercontent.com/Bethesda-AI-Projects-Lab/bicycle_vision/main/photos/three_stills_with_detects.jpg)
 
