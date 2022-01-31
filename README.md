@@ -6,6 +6,8 @@ The system is built around a Raspberry Pi 4 single-board computer, powered by a 
 
 Here we demonstrate a viable prototype for CAR-BAC. We have entered CAR-BAC in the [Eyes on Edge: tinyML Vision Challenge](https://www.hackster.io/contests/tinyml-vision), sponsored by the [tinyML](https://www.tinyml.org/) foundation. Our paper provides a full description of the solution, and it details possible enhancements to be pursued in future iterations. Enhancements fall into three categories: size/weight/power (SWaP) reduction, algorithm improvements, and additional features.
 
+Team members: Amy Dexter, Robert Kraig, Neil Tender, Steve Milligan
+
 Components of CAR-BAC system:
 
 ![CAR BACK](https://user-images.githubusercontent.com/11370301/132293023-93656827-e750-4b45-a76b-27e16b1296c9.png)
